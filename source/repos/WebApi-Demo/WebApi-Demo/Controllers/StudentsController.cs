@@ -10,7 +10,7 @@ namespace WebApi_Demo.Controllers
 {
     public class StudentsController : ApiController
     {
-         static List<Student> _studentList = null; 
+        static List<Student> _studentList = null;
         void Initialize()
         {
             _studentList = new List<Student>()
@@ -29,60 +29,103 @@ namespace WebApi_Demo.Controllers
             }
         }
 
-            // GET: api/Students
-            public List<Student> Get()
+        // GET: api/Students
+        public HttpResponseMessage Get()
         {
-            return _studentList;
+           // return Ok(_studentList);
+            return Request.CreateResponse(HttpStatusCode.OK, _studentList);
+
         }
 
         // GET: api/Students/5
-        public Student Get(int id)
+        public IHttpActionResult Get(int id)
         {
             Student student = _studentList.FirstOrDefault(x => x.StudentId == id);
+            if (student == null)
+            {
+                return Content(HttpStatusCode.NotFound, "Not FOund");
+               // return NotFound();
+                //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Student not found");
+            }
+            else
+            {
+                return Ok(student);
+               // return Request.CreateResponse(HttpStatusCode.Found, student);
+            }
 
-            return student;
+
         }
 
         // POST: api/Students
-        public void Post(Student student)
+        public IHttpActionResult Post(Student student)
         {
-            if(student != null)
+            if (student != null)
             {
                 _studentList.Add(student);
             }
+          
+            return Content(HttpStatusCode.Created, "Record Created");
+            // return Request.CreateResponse(HttpStatusCode.Created, "Record inserted");
         }
 
         // PUT: api/Students/5
-        public void Put(int id, Student objStudent)
+        public IHttpActionResult Put(int id, Student objStudent)
         {
             Student student = _studentList.Where(x => x.StudentId == id).FirstOrDefault();
-
-            if (student != null)
+            if (student == null)
             {
-                foreach (Student temp in _studentList)
+                return NotFound();
+               // return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Student not found");
+            }
+            else
+            {
+                if (student != null)
                 {
-                    if (temp.StudentId == id)
+                    foreach (Student temp in _studentList)
                     {
-                        temp.Name = objStudent.Name;
-                        temp.DateOfBirth = objStudent.DateOfBirth;
-                        temp.Batch = objStudent.Batch;
-                        temp.Marks = objStudent.Marks;
+                        if (temp.StudentId == id)
+                        {
+                            temp.Name = objStudent.Name;
+                            temp.DateOfBirth = objStudent.DateOfBirth;
+                            temp.Batch = objStudent.Batch;
+                            temp.Marks = objStudent.Marks;
+                        }
                     }
+
+                }
+                return Content(HttpStatusCode.OK, "Record Modified");
+               // return Request.CreateResponse(HttpStatusCode.OK, "Record modified");
+            }
+        }
+    
+        // DELETE: api/Students/5
+        public IHttpActionResult Delete(int? id)
+        {
+            if (id != null)
+            {
+                Student student = _studentList.FirstOrDefault(x => x.StudentId == id);
+                if (student == null)
+                {
+                    return NotFound();
+                   // return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Student not found");
                 }
 
-            }
-            }
+                else
+                {
 
-            // DELETE: api/Students/5
-            public void Delete(int id)
-        {
-            Student student = _studentList.Where(x => x.StudentId == id).FirstOrDefault();
-
-            if (student != null)
+                    _studentList.Remove(student);
+                    return Content(HttpStatusCode.OK, "Record deleted");
+                    //  return Request.CreateResponse(HttpStatusCode.OK, "Record Deleted");
+                }
+            }
+            else
             {
-                _studentList.Remove(student);
+                return Content(HttpStatusCode.BadRequest, "Please provide ID");
+                  //  return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Please provide id"); 
+                }
             }
-
         }
-    }
-}
+        }
+
+    
+
