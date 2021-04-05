@@ -42,7 +42,50 @@ namespace WebApi_Demo.Controllers
             return Ok(student);
         }
 
+        //// PUT: api/Student/5
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PutStudent(int id, Student student)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != student.StudentId)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    db.Entry(student).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!StudentExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+
         // PUT: api/Student/5
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PutStudent(int id, [FromUri] Student student)
+        //{
+
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PutStudent([FromBody] int id, [FromUri] Student student)
+        //{
         [ResponseType(typeof(void))]
         public IHttpActionResult PutStudent(int id, Student student)
         {
@@ -76,6 +119,8 @@ namespace WebApi_Demo.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+
 
         // POST: api/Student
         [ResponseType(typeof(Student))]

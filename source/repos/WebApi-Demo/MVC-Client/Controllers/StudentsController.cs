@@ -65,6 +65,7 @@ namespace MVC_Client.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.GetAsync("api/Student/" + id);
+               
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonString = response.Content.ReadAsStringAsync();

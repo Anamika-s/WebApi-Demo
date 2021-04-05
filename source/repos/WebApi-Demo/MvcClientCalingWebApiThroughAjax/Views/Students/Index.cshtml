@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        alert("Page loaded");
+
+        // Get Method will be called
+
+        $.ajax(
+            {
+                type: 'GET',
+                url: 'https://localhost:44383/api/Student',
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (index, value) {
+
+                        $("<tr> <td> " + value.StudentId + "</td>"
+                            + "<td> " + value.Name + "</td>"
+                            + "<td> " + value.Marks + "</td>"
+                            + "<td> " + value.Batch + "</td>"
+                            + "<td> " + value.DateOfBirth + "</td>"
+                            + "</tr>").appendTo("#table");
+                    });
+                },
+                error: function (data) {
+                    alert("Some Error occured");
+                }
+            });
+
+
+        // INSERT DATA
+
+        $("#btnAdd").click(function () {
+            var studentObj = {
+
+                Name: $('#name').val(),
+                Marks: parseInt($('#marks').val()),
+                Batch: $('#batch').val(),
+                DateOfBirth: $('#dob').val()
+            };
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: 'https://localhost:44383/api/Student',
+                    data: JSON.stringify(studentObj),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        alert("Record inserted");
+                    },
+                    error: function (data) {
+                        alert("Some Error occured");
+                    }
+                });
+        });
+
+        // EDIT DATA
+
+        $("#btnEdit").click(function () {
+            alert("Edit");
+            var studentObj = {
+                StudentId : parseInt($("#id").val()),
+                Name: $('#name').val(),
+                Marks: parseInt($('#marks').val()),
+                Batch: $('#batch').val(),
+                DateOfBirth: $('#dob').val()
+            };
+
+            console.log(studentObj);
+            $.ajax(
+                {
+                    type: 'PUT',
+                    url: 'https://localhost:44383/api/Student/'+ $("#id").val(),
+                    data: JSON.stringify(studentObj),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        alert("Record edited");
+                    },
+                    error: function (data) {
+                        alert("Some Error occured");
+                    }
+                });
+        });
+
+    });
+</script>
+
+
+
+<table id="table"></table>
+
+
+
+<form>
+    Enter Name:
+    <input type="text" id="name" />
+    Enter Marks :
+    <input type="text" id="marks" />
+    Enter Batch :
+    <input type="text" id="batch" />
+    Enter Date Of Birth :
+    <input type="date" id="dob" />
+    <input type="button" id="btnAdd" value="Add" />
+</form>
+
+<br />
+<br />
+Edit Record
+
+<form>
+    Enter Id for which to edit record:
+    <input type="number" id="id" />
+    Enter Name:
+    <input type="text" id="editname" />
+    Enter Marks :
+    <input type="text" id="editmarks" />
+    Enter Batch :
+    <input type="text" id="editbatch" />
+    Enter Date Of Birth :
+    <input type="date" id="editdob" />
+    <input type="button" id="btnEdit" value="Edit" />
+</form>
+

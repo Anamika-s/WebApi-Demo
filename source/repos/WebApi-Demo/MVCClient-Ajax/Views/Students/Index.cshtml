@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "Index1";
+}
+
+<h2>Index</h2>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // $("#t1").css("display", "none");
+        //$("#btn").click(function () {
+        //    alert("a");
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:44383/api/student',
+
+            dataType: 'json',
+            success: function (data) {
+                //$("#t1").css("display", "block");
+                $.each(data, function (index, value) {
+
+                    $("<tr><td>" + value.StudentId + "</td>" +
+                        "<td>" + value.Name + "</td> " +
+                        "<td>" + value.Batch + "</td>" +
+                        "<td>" + value.Marks + "</td>" +
+                        "<td>" + value.DateOfBirth + "</td> </tr> ")
+                        .appendTo("#t1");
+
+                    //$("#ul1").append("<li>" + d + "</li>");
+
+                });
+            }
+        });
+
+
+        $("#btnAdd").click(function () {
+            var studentObj = {
+                //EmployeeID: $('#EmployeeID').val(),
+                Name: $('#name').val(),
+                Marks: parseInt($('#marks').val()),
+                Batch: $('#batch').val(),
+                DateOfBirth: $('#dob').val()
+            };
+            $.ajax({
+                url: "https://localhost:44383/api/student",
+                data: JSON.stringify(studentObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    alert("Added");
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        });
+
+
+        $("#btnEdit").click(function () {
+            var studentObj = {
+                StudentId: $('#id').val(),
+                Name: $('#editname').val(),
+                Marks: parseInt($('#editmarks').val()),
+                Batch: $('#editbatch').val(),
+                DateOfBirth: $('#editdob').val()
+            };
+            $.ajax({
+                url: "https://localhost:44383/api/student/" + $("#id").val(),
+                data: JSON.stringify(studentObj),
+                type: "PUT",
+                
+                contentType: "application/json;charset=utf-8",
+
+                success: function (result) {
+
+                    alert(studentObj);
+                    console.log(studentObj);
+                    alert("Edited");
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        });
+
+
+        $("#btnDelete").click(function () {
+             $.ajax({
+                url: "https://localhost:44383/api/student/" + $("#idToDelete").val(),
+               
+                type: "DELETE",
+
+                
+
+                success: function (result) {
+
+                    
+                    
+                    alert("Deleted");
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        });
+
+
+
+
+
+    });
+</script>
+
+@*<div>
+    <label>Active</label>*@
+@*@Html.DropDownList("Active", new List<SelectListItem>
+    {
+    new SelectListItem {Text = "Yes", Value = "true", Selected = true},
+    new SelectListItem {Text = "No", Value = "false"},
+    }, "Select ...")*@
+@*</div>
+    Enter Name:
+    <input type="text" id="name" />
+    Enter Salary :
+    <input type="text" id="salary" />
+    Enter Age :
+    <input type="text" id="exp" />
+    Enter DeptId :
+    <input type="number" id="deptid" />
+    Enter ID :
+    <input type="number" id="id" />
+    <input type="button" id="A" value="Update1" />
+    <input type="button" id="btnAdd" value="Add" />
+
+
+    <input type="button" id="btn" value="Click" />
+    <ul id="ul1"> </ul>*@
+<table id="t1" width="50%" border="1"></table>
+
+
+<form>
+    Enter Name:
+    <input type="text" id="name" />
+    Enter Marks :
+    <input type="text" id="marks" />
+    Enter Batch :
+    <input type="text" id="batch" />
+    Enter Date Of Birth :
+    <input type="date" id="dob" />
+    <input type="button" id="btnAdd" value="Add" />
+</form>
+
+
+<br />
+
+<form>
+    Enter Id for which to edit record:
+    <input type="number" id="id" />
+    Enter Name:
+    <input type="text" id="editname" />
+    Enter Marks :
+    <input type="text" id="editmarks" />
+    Enter Batch :
+    <input type="text" id="editbatch" />
+    Enter Date Of Birth :
+    <input type="date" id="editdob" />
+    <input type="button" id="btnEdit" value="Edit" />
+</form>
+
+
+Enter ID To Delete  : <input type="number" id="idToDelete" />
+<button type="button" id="btnDelete"> Delete </button>

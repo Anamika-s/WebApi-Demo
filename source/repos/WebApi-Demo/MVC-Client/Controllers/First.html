@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <!-- jQuery library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!-- Latest compiled JavaScript -->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+
+    <link rel="stylesheet" href="../Content/bootstrap.min.css" />
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+     <script>
+
+
+
+
+
+
+        function add() {
+
+            var x = parseInt(document.getElementById("txtNo1").value);
+            var y = parseInt(document.getElementById("txtNo2").value);
+            document.getElementById("txtResult").value = x + y;
+
+        }
+        function subtract() {
+
+            var x = parseInt(document.getElementById("txtNo1").value);
+            var y = parseInt(document.getElementById("txtNo2").value);
+            document.getElementById("txtResult").value = x - y;
+
+        }
+
+        function changestyle() {
+            let myElements = document.querySelectorAll(".form-control");
+            alert(myElements.length);
+            for (let i = 0; i < myElements.length; i++) {
+
+                myElements[i].style.backgroundColor = "yellow";
+            }
+        }
+    </script>
+</head>
+<body>
+     <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="txtNo1">Enter No1 :</label>
+                        <input type="number" class="form-control" id="txtNo1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtNo2">Enter No2 :</label>
+                        <input type="number" class="form-control" id="txtNo2">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtResult">Result :</label>
+                        <input type="number" class="form-control" id="txtResult">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="add()"> Add </button>
+                    <button type="button" class="btn btn-primary" onclick="subtract()"> Subtract </button>
+                    <button type="button" class="btn btn-primary" onclick="divide()"> Divide </button>
+                    <button type="button" class="btn btn-primary" onclick="multiply()"> Multiply </button>
+                    <button type="button" class="btn btn-success" onclick="changestyle()"> Multiply </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
